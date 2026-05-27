@@ -10,7 +10,7 @@ from bs4 import BeautifulSoup
 
 
 REPO_ROOT = Path(__file__).resolve().parents[1]
-SCRAPER_PATH = REPO_ROOT / "webscrape_prometheus_please_work_2.py"
+SCRAPER_PATH = REPO_ROOT / "webscraper.py"
 
 
 class FakeOpenAIClient:
@@ -19,23 +19,23 @@ class FakeOpenAIClient:
 
 
 def load_scraper_module():
-    sys.modules.pop("webscrape_prometheus_please_work_2", None)
+    sys.modules.pop("webscraper", None)
 
     fake_openai = types.ModuleType("openai")
     fake_openai.OpenAI = FakeOpenAIClient
 
-    fake_upload = types.ModuleType("uploading_to_normalized_database")
+    fake_upload = types.ModuleType("uploading_to_database")
     fake_upload.upload_all = MagicMock()
 
     with patch.dict(
         sys.modules,
         {
             "openai": fake_openai,
-            "uploading_to_normalized_database": fake_upload,
+            "uploading_to_database": fake_upload,
         },
     ):
         spec = importlib.util.spec_from_file_location(
-            "webscrape_prometheus_please_work_2",
+            "webscraper",
             SCRAPER_PATH,
         )
         module = importlib.util.module_from_spec(spec)

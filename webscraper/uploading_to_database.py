@@ -8,6 +8,11 @@ from typing import Any
 
 from supabase import create_client, Client
 
+from dotenv import load_dotenv
+from pathlib import Path
+
+load_dotenv(Path(__file__).resolve().parent / ".env")
+
 PROJECT_URL = os.getenv("SUPABASE_PROJECT_URL")
 SERVICE_ROLE_KEY = os.getenv("SUPABASE_SERVICE_ROLE_KEY")
 

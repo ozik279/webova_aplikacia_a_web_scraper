@@ -5,7 +5,12 @@ import time
 import requests
 from bs4 import BeautifulSoup, Doctype, Tag
 import re
-import uploading_to_normalized_database as upload
+import uploading_to_database as upload
+
+from dotenv import load_dotenv
+from pathlib import Path
+
+load_dotenv(Path(__file__).resolve().parent / ".env")
 
 session = requests.Session()
 session.headers.update({
